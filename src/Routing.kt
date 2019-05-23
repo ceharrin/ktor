@@ -7,6 +7,7 @@ import io.ktor.http.content.resources
 import io.ktor.http.content.static
 import io.ktor.request.receiveParameters
 import io.ktor.response.respond
+import io.ktor.response.respondRedirect
 import io.ktor.response.respondText
 import io.ktor.routing.Routing
 import io.ktor.routing.get
@@ -41,7 +42,8 @@ fun Routing.login() {
     post ("/login") {
         val post = call.receiveParameters()
         if (post["username"] != null && post["username"] == post["password"]) {
-            call.respondText("OK")
+//            call.respondText("OK")
+            call.respondRedirect("/html-freemarker", permanent = false)
         } else {
             call.respond(FreeMarkerContent("login.ftl", mapOf("error" to "Invalid login")))
         }
